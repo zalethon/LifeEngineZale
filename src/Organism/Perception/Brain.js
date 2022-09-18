@@ -6,11 +6,12 @@ const Decision = {
     neutral: 0,
     retreat: 1,
     chase: 2,
+    signal: 3,
     getRandom: function(){
-        return Math.floor(Math.random() * 3);
+        return Math.floor(Math.random() * 4);
     },
     getRandomNonNeutral: function() {
-        return Math.floor(Math.random() * 2)+1;
+        return Math.floor(Math.random() * 3)+1;
     }
 }
 
@@ -23,6 +24,9 @@ class Brain {
         this.decisions = {};
         for (let cell of CellStates.all) {
             this.decisions[cell.name] = Decision.neutral;
+        }
+        for (let signal_state of CellStates.signal.signal_states) {
+            this.decisions[signal_state] = Decision.signal;
         }
         this.decisions[CellStates.food.name] = Decision.chase;
         this.decisions[CellStates.killer.name] = Decision.retreat;
@@ -45,6 +49,9 @@ class Brain {
         this.decisions[CellStates.mover.name] = Decision.getRandom();
         this.decisions[CellStates.armor.name] = Decision.getRandom();
         this.decisions[CellStates.eye.name] = Decision.getRandom();
+        for (let signal_state of CellStates.signal.signal_states) {
+            this.decisions[signal_state] = Decision.getRandom();
+        }
     }
 
     observe(observation) {
@@ -60,12 +67,17 @@ class Brain {
                 continue;
             }
             if (obs.distance < closest) {
-                decision = this.decisions[obs.cell.state.name];
+                if (obs.cell.state.name == "signal") {
+                    decision = this.decisions[obs.cell.state.signal_states[obs.cell.owner.signal_state]];
+                } else {
+                    decision = this.decisions[obs.cell.state.name];
+                }
                 move_direction = obs.direction;
                 closest = obs.distance;
             }
         }
         this.observations = [];
+        this.owner.signal_state = decision;
         if (decision == Decision.chase) {
             this.owner.changeDirection(move_direction);
             return true;

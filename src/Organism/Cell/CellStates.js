@@ -9,6 +9,7 @@ class CellState{
         ctx.fillStyle = this.color;
         ctx.fillRect(cell.x, cell.y, size, size);
     }
+    
 }
 
 class Empty extends CellState {
@@ -16,6 +17,7 @@ class Empty extends CellState {
         super('empty');
     }
 }
+
 class Food extends CellState {
     constructor() {
         super('food');
@@ -74,6 +76,34 @@ class Eye extends CellState {
     }
 }
 
+class Mimic extends CellState {
+    constructor(mimic_cell) {
+        super('mimic')
+    }
+}
+
+class Signal extends CellState {
+    constructor() {
+        super('signal');
+        this.signal_states = ["sig1", "sig2", "sig3", "sig4"];
+        this.color_list = [];
+
+    }
+
+    render(ctx, cell, size) {
+        ctx.fillStyle = this.color;
+        ctx.fillRect(cell.x, cell.y, size, size);
+        if(size == 1)
+            return;
+        var x = cell.x + size/4;
+        var y = cell.y + size/4;
+        var h = size/2;
+        var w = size/2;
+        ctx.fillStyle = this.sig_color;
+        ctx.fillRect(x, y, w, h);
+    }
+}
+
 const CellStates = {
     empty: new Empty(),
     food: new Food(),
@@ -84,9 +114,11 @@ const CellStates = {
     killer: new Killer(),
     armor: new Armor(),
     eye: new Eye(),
+    mimic: new Mimic(),
+    signal: new Signal(),
     defineLists() {
-        this.all = [this.empty, this.food, this.wall, this.mouth, this.producer, this.mover, this.killer, this.armor, this.eye]
-        this.living = [this.mouth, this.producer, this.mover, this.killer, this.armor, this.eye];
+        this.all = [this.empty, this.food, this.wall, this.mouth, this.producer, this.mover, this.killer, this.armor, this.eye, this.mimic, this.signal]
+        this.living = [this.mouth, this.producer, this.mover, this.killer, this.armor, this.eye, this.signal];
     },
     getRandomName: function() {
         return this.all[Math.floor(Math.random() * this.all.length)].name;

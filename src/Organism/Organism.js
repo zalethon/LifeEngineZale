@@ -24,6 +24,7 @@ class Organism {
         this.ignore_brain_for = 0;
         this.mutability = 5;
         this.damage = 0;
+        this.signal_state = 0;
         this.brain = new Brain(this);
         if (parent != null) {
             this.inherit(parent);
@@ -38,7 +39,7 @@ class Organism {
             //deep copy parent cells
             this.anatomy.addInheritCell(c);
         }
-        if(parent.anatomy.is_mover && parent.anatomy.has_eyes) {
+        if((parent.anatomy.is_mover || parent.anatomy.has_signal) && parent.anatomy.has_eyes) {
             this.brain.copy(parent.brain);
         }
     }
@@ -79,7 +80,7 @@ class Organism {
         } 
         var mutated = false;
         if (Math.random() * 100 <= prob) {
-            if (org.anatomy.is_mover && Math.random() * 100 <= 10) { 
+            if ((org.anatomy.is_mover || org.anatomy.has_signal) && Math.random() * 100 <= 10) { 
                 if (org.anatomy.has_eyes) {
                     org.brain.mutate();
                 }
@@ -320,7 +321,7 @@ class Organism {
     serialize() {
         let org = SerializeHelper.copyNonObjects(this);
         org.anatomy = this.anatomy.serialize();
-        if (this.anatomy.is_mover && this.anatomy.has_eyes)
+        if ((this.anatomy.is_mover || this.anatomy.has_signal) && this.anatomy.has_eyes)
             org.brain = this.brain.serialize();
         org.species_name = this.species.name;
         return org;
@@ -328,9 +329,9 @@ class Organism {
 
     loadRaw(org) {
         SerializeHelper.overwriteNonObjects(org, this);
-        this.anatomy.loadRaw(org.anatomy)
+        this.anatomy.loadRaw(org.anatomy);
         if (org.brain)
-            this.brain.copy(org.brain)
+            this.brain.copy(org.brain);
     }
 
 }

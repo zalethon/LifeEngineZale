@@ -1,5 +1,5 @@
-node_modules/*
+node_modules
 dist/js/bundle.js
-devuser/
-.vscode/
-work_recordings/
+devuser
+.vscode
+work_recordings

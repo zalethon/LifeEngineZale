@@ -79,8 +79,8 @@ class WorldEnvironment extends Environment{
         var center = this.grid_map.getCenter();
         var org = new Organism(center[0], center[1], this);
         org.anatomy.addDefaultCell(CellStates.mouth, 0, 0);
-        org.anatomy.addDefaultCell(CellStates.producer, 1, 1);
-        org.anatomy.addDefaultCell(CellStates.producer, -1, -1);
+        org.anatomy.addDefaultCell(CellStates.mover, 1, 1);
+        org.anatomy.addDefaultCell(CellStates.eye, -1, -1);
         this.addOrganism(org);
         FossilRecord.addSpecies(org, null);
     }

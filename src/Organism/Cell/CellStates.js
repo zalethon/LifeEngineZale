@@ -99,7 +99,7 @@ class Signal extends CellState {
         var y = cell.y + size/4;
         var h = size/2;
         var w = size/2;
-        ctx.fillStyle = this.sig_color;
+        ctx.fillStyle = this.color_list[cell.owner.signal_state];
         ctx.fillRect(x, y, w, h);
     }
 }

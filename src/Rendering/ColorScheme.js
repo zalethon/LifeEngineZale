@@ -11,10 +11,10 @@ var color_scheme = {
     "armor":"#7230DB",
     "eye":"#B6C1EA",
     "eye-slit": "#0E1318",
-    "signal": "#FF00FF",
-    "sig1": "#0000FF",
-    "sig2": "#00FF00",
-    "sig3": "#FF0000",
+    "signal": "#222222",
+    "sig1": "#000000",
+    "sig2": "#FF0000",
+    "sig3": "#00FF00",
     "sig4": "#FFFF00"
 };
 

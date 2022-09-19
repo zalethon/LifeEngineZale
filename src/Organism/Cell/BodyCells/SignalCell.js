@@ -1,8 +1,8 @@
 const CellStates = require("../CellStates");
 const BodyCell = require("./BodyCell");
-const Hyperparams = require("../../../Hyperparameters");
-const Directions = require("../../Directions");
-const Observation = require("../../Perception/Observation")
+// const Hyperparams = require("../../../Hyperparameters");
+// const Directions = require("../../Directions");
+// const Observation = require("../../Perception/Observation")
 
 class SignalCell extends BodyCell{
     constructor(org, loc_col, loc_row){

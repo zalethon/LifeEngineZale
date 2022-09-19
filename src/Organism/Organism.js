@@ -307,6 +307,8 @@ class Organism {
                         this.ignore_brain_for = this.move_range + 1;
                 }
             }
+        } else if (this.anatomy.has_signal && this.anatomy.has_eyes) {
+            this.brain.decide()
         }
 
         return this.living;

@@ -80,7 +80,7 @@ class WorldEnvironment extends Environment{
         var org = new Organism(center[0], center[1], this);
         org.anatomy.addDefaultCell(CellStates.mouth, 0, 0);
         org.anatomy.addDefaultCell(CellStates.producer, 1, 1);
-        org.anatomy.addDefaultCell(CellStates.signal, -1, -1);
+        org.anatomy.addDefaultCell(CellStates.producer, -1, -1);
         this.addOrganism(org);
         FossilRecord.addSpecies(org, null);
     }
